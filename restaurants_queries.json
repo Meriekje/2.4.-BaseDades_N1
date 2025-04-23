@@ -1,0 +1,134 @@
+[
+  { "query": "1.- everything", "filter": {} },
+
+  {
+    "query": "2.- restaurant_id, name, borough, cuisine",
+    "filter": {},
+    "projection": { "restaurant_id": 1, "name": 1, "borough": 1, "cuisine": 1 }
+  },
+
+  {
+    "query": "3.- restaurant_id, name, borough, cuisine (no _id)",
+    "filter": {},
+    "projection": { "_id": 0, "restaurant_id": 1, "name": 1, "borough": 1, "cuisine": 1 }
+  },
+
+  {
+    "query": "4.- restaurant_id, name, borough, zipcode (no _id)",
+    "filter": {},
+    "projection": { "_id": 0, "restaurant_id": 1, "name": 1, "borough": 1, "address.zipcode": 1 }
+  },
+
+  {
+    "query": "5.- Restaurants in Bronx",
+    "filter": { "borough": "Bronx" }
+  },
+
+  {
+    "query": "6.- The first 5 restaurants in Bronx",
+    "filter": { "borough": "Bronx" },
+    "limit": 5
+  },
+
+  {
+    "query": "7.- 5 next restaurants in Bronx after the fifth",
+    "filter": { "borough": "Bronx" },
+    "skip": 5,
+    "limit": 5
+  },
+
+  {
+    "query": "8.- Score > 90",
+    "filter": { "grades.score": { "$gt": 90 } }
+  },
+
+  {
+    "query": "9.- Score between 81 and 99",
+    "filter": { "grades.score": { "$gt": 80, "$lt": 100 } }
+  },
+
+  {
+    "query": "10.- Latitude < -95.754168",
+    "filter": { "address.coord.1": { "$lt": -95.754168 } }
+  },
+
+  {
+    "query": "11.- No American cuisine, score > 70, length < -65.754168",
+    "filter": {
+        "$and": [
+            { "cuisine": { "$ne": "American" } },
+            { "grades.score": { "$gt": 70 } },
+            { "address.coord.0": { "$lt": -65.754168 } }
+          ]
+    }
+  },
+
+  {
+    "query": "12.- 11 but not $and",
+    "filter": {
+      "cuisine": { "$ne": "American" },
+      "grades.score": { "$gt": 70 },
+      "address.coord.0": { "$lt": -65.754168 }
+    }
+  },
+
+  {
+    "query": "13.- No American cuisine, grade A, no Brooklyn, cuisine desc",
+    "filter": {
+      "cuisine": { "$ne": "American" },
+      "grades.grade": "A",
+      "borough": { "$ne": "Brooklyn" }
+    },
+    "sort": { "cuisine": -1 }
+  },
+
+  {
+    "query": "14.- Name starts by 'Wil'",
+    "filter": { "name": { "$regex": "^Wil" } },
+    "projection": { "_id": 0, "restaurant_id": 1, "name": 1, "borough": 1, "cuisine": 1 }
+  },
+
+  {
+    "query": "15.- Name starts by 'ces'",
+    "filter": { "name": { "$regex": "ces$" } },
+    "projection": { "_id": 0, "restaurant_id": 1, "name": 1, "borough": 1, "cuisine": 1 }
+  },
+
+  {
+    "query": "16.- Name has 'Reg' on it",
+    "filter": { "name": { "$regex": "Reg" } },
+    "projection": { "_id": 0, "restaurant_id": 1, "name": 1, "borough": 1, "cuisine": 1 }
+  },
+
+  {
+    "query": "17.- Restaurants in Bronx with American or Chinese cuisine",
+    "filter": {
+      "borough": "Bronx",
+      "cuisine": { "$in": ["American", "Chinese"] }
+    }
+  },
+
+  {
+    "query": "18.- restaurant_id, name, borough and cuisine and they are in Staten Island, Queens, Bronx or Brooklyn",
+    "filter": {
+      "borough": { "$in": ["Staten Island", "Queens", "Bronx", "Brooklyn"] }
+    },
+    "projection": { "_id": 0, "restaurant_id": 1, "name": 1, "borough": 1, "cuisine": 1 }
+  },
+
+  {
+    "query": "19.- restaurant_id, name, borough and cuisine and out of Staten Island, Queens, Bronx or Brooklyn",
+    "filter": {
+      "borough": { "$nin": ["Staten Island", "Queens", "Bronx", "Brooklyn"] }
+    },
+    "projection": { "_id": 0, "restaurant_id": 1, "name": 1, "borough": 1, "cuisine": 1 }
+  },
+
+  {
+    "query": "20.- Score less or equal 10",
+    "filter": {
+      "grades.score": { "$lte": 10 }
+    },
+    "projection": { "_id": 0, "restaurant_id": 1, "name": 1, "borough": 1, "cuisine": 1 }
+  }
+]
